@@ -1,7 +1,5 @@
-import mapPackage.PlagiCheck;
+import framework.PlagiCheck;
 import org.junit.Test;
-
-import java.io.IOException;
 
 /**
  * Created by Felix on 27.03.2015.
@@ -10,12 +8,14 @@ import java.io.IOException;
 public class PlagiCheckTest {
 
     @Test
-    public void testingOpenFile() throws IOException {
-        String s= System.getProperty("user.dir");
-        s=s+"\\src\\test\\resource\\Input 1.txt";
+    public void testingOpenFile() throws Exception {
+        String s= System.getProperty("user.dir")+"\\src\\test\\resource\\";
+        String s2 = s+"Input 2.txt";
+        s=s+"Input 1.txt";
+
         String[] sarr= new String[2];
         sarr[0]=s;
-        sarr[1]=s;
+        sarr[1]=s2;
         PlagiCheck.main(sarr);
     }
 }
