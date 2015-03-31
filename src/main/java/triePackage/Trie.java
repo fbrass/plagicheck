@@ -11,20 +11,24 @@ import java.util.List;
  * Created by Felix on 27.03.2015.
  */
 public class Trie implements ITrie {
+
+    private IMapFactory mapFactory;
+
     public Trie(IMapFactory mapFactory) {
+        this.mapFactory = mapFactory;
     }
 
     @Override
-    public ITrieReference insert(Iterator k, IActionAtInsert a) {
+    public ITrieReference insert(Iterator iterator, IActionAtInsert actionInsert) {
+
+        //key für anfangsbuchstabe muss herausgefunden werden
+        Integer key = Integer.valueOf(12345);
+
+        ITrieNode nodeFirstCharacter = new TrieNode(mapFactory, null, key);
+
+        return nodeFirstCharacter.recursiveInsert(iterator, actionInsert);
 
 
-
-        while (k.hasNext()){
-            /*
-            logik fehlt
-             */
-        }
-        return null;
     }
 
     @Override

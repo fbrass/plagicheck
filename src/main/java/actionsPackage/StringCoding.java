@@ -21,7 +21,7 @@ public class StringCoding implements IActionAtInsert{
     }
 
     @Override
-    public Object getActualValue(Object value) {
+    public Object getActualValue() {
         return counter;
     }
 
@@ -33,5 +33,9 @@ public class StringCoding implements IActionAtInsert{
     @Override
     public Object actionAtKeyFound(Object previous) {
         return previous;
+    }
+
+    public String toString() {
+        return "Counter="+counter;
     }
 }
