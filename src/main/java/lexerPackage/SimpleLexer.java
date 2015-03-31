@@ -4,13 +4,11 @@ import actionsPackage.IActionAtInsert;
 import actionsPackage.StringCoding;
 import mapPackage.IMapFactory;
 import mapPackage.TreeMapFactory;
-import sun.rmi.runtime.Log;
 import tokenPackage.IToken;
 import triePackage.ITrie;
 import tokenPackage.Token;
 import triePackage.Trie;
 
-import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
