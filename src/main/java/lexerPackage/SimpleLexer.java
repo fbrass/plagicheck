@@ -47,6 +47,7 @@ public class SimpleLexer implements ILexer {
                     String intermediate = tk.nextToken();
                     Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"--- nest token:"+intermediate);
                     //später: result
+                    this.trie.insert(intermediate,action);
                     // trie. insert(intermediate, action);
                     // DIC
                     result = new Token(-1, -1); //ein dummy!!!!
