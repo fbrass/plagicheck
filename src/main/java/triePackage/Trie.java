@@ -14,9 +14,14 @@ public class Trie implements ITrie {
 
     private IMapFactory mapFactory;
 
+    /**
+     * Constructor for Trie
+     * @param mapFactory
+     */
     public Trie(IMapFactory mapFactory) {
         this.mapFactory = mapFactory;
     }
+
 
     @Override
     public ITrieReference insert(Iterator iterator, IActionAtInsert actionInsert) {
