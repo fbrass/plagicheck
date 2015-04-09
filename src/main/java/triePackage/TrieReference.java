@@ -29,4 +29,9 @@ public class TrieReference implements ITrieReference {
     public ITrieNode getNode() {
         return node;
     }
+
+    @Override
+    public String toString(){
+        return value.toString()+" "+node.toString();
+    }
 }

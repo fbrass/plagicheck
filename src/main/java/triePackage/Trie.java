@@ -13,6 +13,7 @@ import java.util.List;
 public class Trie implements ITrie {
 
     private IMapFactory mapFactory;
+    private ITrieNode rootNode;
 
     /**
      * Constructor for Trie
@@ -20,20 +21,13 @@ public class Trie implements ITrie {
      */
     public Trie(IMapFactory mapFactory) {
         this.mapFactory = mapFactory;
+        this.rootNode = new TrieNode(mapFactory);
     }
 
 
     @Override
     public ITrieReference insert(Iterator iterator, IActionAtInsert actionInsert) {
-
-        //key für anfangsbuchstabe muss herausgefunden werden
-        Integer key = Integer.valueOf(12345);
-
-        ITrieNode nodeFirstCharacter = new TrieNode(mapFactory, null, key);
-
-        return nodeFirstCharacter.recursiveInsert(iterator, actionInsert);
-
-
+        return rootNode.recursiveInsert(iterator, actionInsert);
     }
 
     @Override
@@ -45,6 +39,32 @@ public class Trie implements ITrie {
         }
 
         Iterator<Character> iteratorCharList= charList.iterator();
-        return insert (iteratorCharList, a);
+        return insert(iteratorCharList, a);
     }
+
+    @Override
+    public String toString(){
+        Iterator it=this.rootNode.getOutgoingEdgeMap().values().iterator();
+        String s=recursiveToString(it,"");
+
+        return rootNode.toString();
+    }
+
+    public String recursiveToString(Iterator it,String s){
+        if(it.hasNext()){
+            TrieNode tn= (TrieNode) it.next();
+            System.out.print(s+tn.getIngoingPartialKey());
+            if(tn.getValue()!=0){
+                System.out.print("                  |->"+tn.getValue());
+
+            }
+            System.out.print("\n");
+            s=s+"..";
+            Iterator it2=tn.getOutgoingEdgeMap().values().iterator();
+            recursiveToString(it2,s);
+            recursiveToString(it,s);
+        }
+        return s;
+    }
+
 }
