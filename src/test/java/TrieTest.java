@@ -13,6 +13,7 @@ public class TrieTest {
 
     private Trie trie;
 
+
     @Before
     public void setUp() {
         this.trie = new Trie(new TreeMapFactory());

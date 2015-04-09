@@ -51,6 +51,7 @@ public class Trie implements ITrie {
     }
 
     public String recursiveToString(Iterator it,String s){
+        String t = s;
         if(it.hasNext()){
             TrieNode tn= (TrieNode) it.next();
             System.out.print(s+tn.getIngoingPartialKey());
@@ -58,11 +59,17 @@ public class Trie implements ITrie {
                 System.out.print("                  |->"+tn.getValue());
 
             }
-            System.out.print("\n");
-            s=s+"..";
+            if(tn.getOutgoingEdgeMap().isEmpty()){
+                System.out.print("\n");
+
+            }
+            else {
+                System.out.print("\n");
+                s = s + "..";
+            }
             Iterator it2=tn.getOutgoingEdgeMap().values().iterator();
             recursiveToString(it2,s);
-            recursiveToString(it,s);
+            recursiveToString(it,t);
         }
         return s;
     }
