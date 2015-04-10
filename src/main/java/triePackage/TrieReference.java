@@ -17,7 +17,7 @@ public class TrieReference implements ITrieReference {
 
     @Override
     public boolean isFound() {
-        return false;
+        return found;
     }
 
     @Override
@@ -32,6 +32,6 @@ public class TrieReference implements ITrieReference {
 
     @Override
     public String toString(){
-        return value.toString()+" "+node.toString();
+        return found +" "+value.toString()+" "+node.toString();
     }
 }

@@ -48,14 +48,17 @@ public class TrieNode implements ITrieNode {
             return tn.recursiveInsert(k, a);
 
         } else {
-            if (!outgoingEdgeMap.isEmpty()) {
-                a.actionAtKeyNotFound();
-                this.setValue((Integer) a.getActualValue());
-                return new TrieReference(false, a.getActualValue(), this);
+            if (outgoingEdgeMap.isEmpty()) {
+                if(getValue()==0) {
+                    this.setValue((Integer) a.actionAtKeyNotFound());
+                    return new TrieReference(false,this.getValue(),this);
+                }
+                return new TrieReference(true, this.getValue(), this);
             } else {
-                a.actionAtKeyNotFound();
-                this.setValue((Integer) a.getActualValue());
-                return new TrieReference(true, a.getActualValue(), this);
+                if(getValue()==0){
+                    this.setValue((Integer) a.actionAtKeyNotFound());
+                }
+                return new TrieReference(true, this.getValue(), this);
             }
 
         }
