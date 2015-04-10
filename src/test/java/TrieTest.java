@@ -1,4 +1,6 @@
 import actionsPackage.StringCoding;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import mapPackage.TreeMapFactory;
 import org.junit.After;
@@ -8,7 +10,8 @@ import triePackage.ITrieReference;
 import triePackage.Trie;
 
 /**
- * Created by Wilhelm on 01.04.2015.
+ * Created by Felix on 01.04.2015.
+ * Testclass for Trie
  */
 public class TrieTest {
 
@@ -52,16 +55,21 @@ public class TrieTest {
     }
 
     @Test
-    public void testStringCoding(){
+    public void testStringCodingValue(){
         this.trie = new Trie(new TreeMapFactory());
         StringCoding sc= new StringCoding(4711);
-        trie.insert("alpha",sc);
-        trie.insert("alpha",sc);
-        trie.insert("alpha",sc);
+        trie.insert("alpha", sc);
         ITrieReference trieReference=trie.insert("alpha", sc);
-        System.out.println(trieReference.toString());
+        assertEquals(trieReference.getValue(), 4711);
+        assertEquals(sc.getActualValue(), 4712);
+        trieReference=trie.insert("alphabet",sc);
+        assertEquals(trieReference.getValue(), 4712);
+        assertEquals(sc.getActualValue(), 4713);
+    }
 
-        trie.toString();
+    @Test
+    public void testTrieReference(){
+        //TODO: TrieReference enthaelt null und nicht den node
     }
 
     @Test

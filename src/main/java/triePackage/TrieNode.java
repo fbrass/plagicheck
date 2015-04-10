@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Created by Felix on 27.03.2015.
+ * TrieNode represents one node in den the datastructure
  */
 public class TrieNode implements ITrieNode {
 
@@ -34,19 +35,15 @@ public class TrieNode implements ITrieNode {
     public ITrieReference recursiveInsert(Iterator k, IActionAtInsert a) {
         if (k.hasNext()) {
             Comparable kComparable = (Comparable) k.next();
-            Iterator<Comparable> it = this.outgoingEdgeMap.keySet().iterator();
-            while (it.hasNext()) {
-                Comparable mapComparable = it.next();
+            for (Comparable mapComparable : (Iterable<Comparable>) this.outgoingEdgeMap.keySet()) {
                 if (mapComparable.compareTo(kComparable) == 0) {
                     TrieNode tn = (TrieNode) this.outgoingEdgeMap.get(mapComparable);
                     return tn.recursiveInsert(k, a);
                 }
             }
-
             TrieNode tn = new TrieNode(mapFactory, this, kComparable);
             outgoingEdgeMap.put(kComparable, tn);
             return tn.recursiveInsert(k, a);
-
         } else {
             if (outgoingEdgeMap.isEmpty()) {
                 if(getValue()==0) {
@@ -82,13 +79,20 @@ public class TrieNode implements ITrieNode {
 
     @Override
     public String toString(){
-        return myRecursiveToString("");
-    }
-
-    public String myRecursiveToString(String s){
-        if(this.parent==null){
-
+        String s="";
+        if(mapFactory==null){
+            s=s+"keine Factory ";
+        }else{
+            s=s+"hat Factory; ";
         }
-        return null;
+        s=s+"Value: "+value+"; ";
+        s=s+"IngoingPartialKey: "+ingoingPartialKey+"; ";
+        s=s+"Parent: "+parent.getValue()+"; ";
+        s=s+"EdgeMap: ";
+        for (Character mapCharacter : (Iterable<Character>) this.outgoingEdgeMap.keySet()) {
+            s=s+mapCharacter+", ";
+        }
+        return s;
     }
+
 }
