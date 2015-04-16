@@ -32,17 +32,17 @@ public class TrieTest {
 
     @Test
     public void testInsertString() {
-        ITrieReference iTrieReference = trie.insert("trietest", new StringCoding(123));
+        trie.insert("trietest", new StringCoding(123));
         //System.out.print(iTrieReference.toString());
     }
 
     @Test
     public void testInsertStringFourTimes() {
         StringCoding sc = new StringCoding(123);
-        ITrieReference iTrieReference1 = trie.insert("test1", sc);
-        ITrieReference iTrieReference2 = trie.insert("test2", sc);
-        ITrieReference iTrieReference3 = trie.insert("test3", sc);
-        ITrieReference iTrieReference4 = trie.insert("test4", sc);
+        trie.insert("test1", sc);
+        trie.insert("test2", sc);
+        trie.insert("test3", sc);
+        trie.insert("test4", sc);
     }
 
     @Test
@@ -71,24 +71,14 @@ public class TrieTest {
 
     @Test
     public void testTrieReference(){
-        //TODO: TrieReference enthaelt null und nicht den node
         StringCoding sc = new StringCoding(4711);
         ITrieReference tr1 = trie.insert("alpha",sc);
         ITrieReference tr2 = trie.insert("alphabet",sc);
         ITrieReference tr3 = trie.insert("alpha",sc);
 
-        /*
-        System.out.println(tr1);
-        System.out.println(tr2);
-        System.out.println(tr3);
-
-        System.out.println(tr1.getValue());
-        System.out.println(tr3.getValue());
-        */
-
         assertSame(tr1.isFound(), tr2.isFound());
         assertSame(tr1.getNode(), tr3.getNode());
-        assertSame(tr1.getValue(), tr3.getValue());
+        assertEquals(tr1.getValue(),tr3.getValue());
     }
 
     @Test
