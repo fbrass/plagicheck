@@ -16,14 +16,14 @@ public class StringCoding implements IActionAtInsert{
 
     @Override
     public void setActualValue(Object updateValue) {
-        Integer updateVal = (Integer) updateValue;
-        counter = updateVal.intValue();
+        counter = (int) updateValue;
     }
 
-    @Override
-    public Object getActualValue() {
+
+    public int getActualValue(){
         return counter;
     }
+
 
     @Override
     public Object actionAtKeyNotFound() {

@@ -1,6 +1,7 @@
 package triePackage;
 
 /**
+ * return Object of an Insertion in the dictionary
  * Created by Wilhelm on 28.03.2015.
  */
 public class TrieReference implements ITrieReference {
@@ -32,6 +33,6 @@ public class TrieReference implements ITrieReference {
 
     @Override
     public String toString(){
-        return found +" "+value.toString()+" "+node.toString();
+        return "is found: "+found +" | Value: "+value.toString()+" | Node of ITrieReference"+node.toString();
     }
 }

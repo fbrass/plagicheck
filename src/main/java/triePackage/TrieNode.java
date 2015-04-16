@@ -16,7 +16,7 @@ public class TrieNode implements ITrieNode {
     private Map outgoingEdgeMap;
     private ITrieNode parent;
     private Object ingoingPartialKey;
-    private int value=0;
+    private int value;
 
 
     public TrieNode(IMapFactory mapFactory, ITrieNode parent, Object ingoingPartialKey) {
@@ -26,9 +26,9 @@ public class TrieNode implements ITrieNode {
         this.ingoingPartialKey = ingoingPartialKey;
     }
 
-    public TrieNode(IMapFactory mapFactory){
-        this.mapFactory=mapFactory;
-        this.outgoingEdgeMap=mapFactory.create();
+    public TrieNode(IMapFactory mapFactory) {
+        this.mapFactory = mapFactory;
+        this.outgoingEdgeMap = mapFactory.create();
     }
 
     @Override
@@ -46,13 +46,13 @@ public class TrieNode implements ITrieNode {
             return tn.recursiveInsert(k, a);
         } else {
             if (outgoingEdgeMap.isEmpty()) {
-                if(getValue()==0) {
+                if (getValue() == 0) {
                     this.setValue((Integer) a.actionAtKeyNotFound());
-                    return new TrieReference(false,this.getValue(),this);
+                    return new TrieReference(false, this.getValue(), this);
                 }
                 return new TrieReference(true, this.getValue(), this);
             } else {
-                if(getValue()==0){
+                if (getValue() == 0) {
                     this.setValue((Integer) a.actionAtKeyNotFound());
                 }
                 return new TrieReference(true, this.getValue(), this);
@@ -71,15 +71,20 @@ public class TrieNode implements ITrieNode {
     }
 
 
-    private void setValue(int i){
-        this.value=i;
+    private void setValue(int i) {
+        this.value = i;
     }
 
-    public int getValue(){return value;}
+    public int getValue() {
+        return value;
+    }
 
     @Override
-    public String toString(){
-        String s="";
+    public String toString() {
+
+        String s = "";
+
+        /*
         if(mapFactory==null){
             s=s+"keine Factory ";
         }else{
@@ -92,6 +97,7 @@ public class TrieNode implements ITrieNode {
         for (Character mapCharacter : (Iterable<Character>) this.outgoingEdgeMap.keySet()) {
             s=s+mapCharacter+", ";
         }
+        */
         return s;
     }
 

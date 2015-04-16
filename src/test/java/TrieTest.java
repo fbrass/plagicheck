@@ -2,6 +2,8 @@ import actionsPackage.StringCoding;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+
 import mapPackage.TreeMapFactory;
 import org.junit.After;
 import org.junit.Before;
@@ -70,6 +72,23 @@ public class TrieTest {
     @Test
     public void testTrieReference(){
         //TODO: TrieReference enthaelt null und nicht den node
+        StringCoding sc = new StringCoding(4711);
+        ITrieReference tr1 = trie.insert("alpha",sc);
+        ITrieReference tr2 = trie.insert("alphabet",sc);
+        ITrieReference tr3 = trie.insert("alpha",sc);
+
+        /*
+        System.out.println(tr1);
+        System.out.println(tr2);
+        System.out.println(tr3);
+
+        System.out.println(tr1.getValue());
+        System.out.println(tr3.getValue());
+        */
+
+        assertSame(tr1.isFound(), tr2.isFound());
+        assertSame(tr1.getNode(), tr3.getNode());
+        assertSame(tr1.getValue(), tr3.getValue());
     }
 
     @Test
@@ -78,7 +97,6 @@ public class TrieTest {
         ITrieReference tr1=trie.insert("alpha", sc);
         ITrieReference tr2=trie.insert("alpha", sc);
         assertNotSame("testTrieReferenceOfRecursiveInsert",tr1.isFound(),tr2.isFound());
-
     }
 
 
