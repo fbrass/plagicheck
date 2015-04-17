@@ -37,9 +37,7 @@ public class Trie implements ITrie {
         for(int i = 0; i<s.length(); i++){
             charList.add(s.charAt(i));
         }
-
-        Iterator<Character> iteratorCharList= charList.iterator();
-        return insert(iteratorCharList, a);
+        return insert(charList.iterator(), a);
     }
 
     @Override

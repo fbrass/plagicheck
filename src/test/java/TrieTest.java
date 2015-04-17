@@ -8,6 +8,7 @@ import mapPackage.TreeMapFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import triePackage.ITrie;
 import triePackage.ITrieReference;
 import triePackage.Trie;
 
@@ -77,16 +78,29 @@ public class TrieTest {
         ITrieReference tr3 = trie.insert("alpha",sc);
 
         assertSame(tr1.isFound(), tr2.isFound());
+        assertNotSame(tr1.isFound(),tr3.isFound());
         assertSame(tr1.getNode(), tr3.getNode());
         assertEquals(tr1.getValue(),tr3.getValue());
     }
 
     @Test
-    public void testTrieReferenceOfRecursiveInsert() throws Exception {
+    public void testTrieReferenceOfRecursiveInsert() {
         StringCoding sc= new StringCoding(4711);
         ITrieReference tr1=trie.insert("alpha", sc);
         ITrieReference tr2=trie.insert("alpha", sc);
-        assertNotSame("testTrieReferenceOfRecursiveInsert",tr1.isFound(),tr2.isFound());
+        assertNotSame("testTrieReferenceOfRecursiveInsert", tr1.isFound(), tr2.isFound());
+    }
+
+    @Test
+    public void testInsertFourTimesTheSame() {
+        StringCoding sc= new StringCoding(4711);
+        ITrieReference tr1=trie.insert("alpha",sc);
+        trie.insert("alpha",sc);
+        trie.insert("alpha",sc);
+        ITrieReference tr2=trie.insert("alpha", sc);
+        assertNotSame(tr1.isFound(),tr2.isFound());
+        assertSame(tr1.getNode(),tr2.getNode());
+        assertEquals(tr1.getValue(),tr2.getValue());
     }
 
 

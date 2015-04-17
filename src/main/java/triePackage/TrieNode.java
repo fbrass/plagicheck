@@ -50,12 +50,12 @@ public class TrieNode implements ITrieNode {
                     this.setValue((Integer) a.actionAtKeyNotFound());
                     return new TrieReference(false, this.getValue(), this);
                 }
-                return new TrieReference(true, this.getValue(), this);
+                return new TrieReference(true, a.actionAtKeyFound(this.getValue()), this);
             } else {
                 if (getValue() == 0) {
                     this.setValue((Integer) a.actionAtKeyNotFound());
                 }
-                return new TrieReference(true, this.getValue(), this);
+                return new TrieReference(true, a.actionAtKeyFound(this.getValue()), this);
             }
 
         }
