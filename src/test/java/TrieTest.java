@@ -51,8 +51,10 @@ public class TrieTest {
         this.trie = new Trie(new TreeMapFactory());
         StringCoding sc= new StringCoding(4710);
         trie.insert("alpha",sc);
+        trie.insert("beta",sc);
         trie.insert("alphabet",sc);
         trie.insert("alfons",sc);
+        trie.insert("alpha",sc);
         trie.insert("alf", sc);
         //trie.toString();
     }
