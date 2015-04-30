@@ -53,22 +53,31 @@ public class DFATEST {
     }
 
     @Test
-    public void testTransForPunctuation(){
-        c=new Character(',');
-        assertEquals(3, this.dfa.trans(0, c));
-        c=new Character('!');
-        assertEquals(3, this.dfa.trans(0, c));
-        c=new Character('.');
-        assertEquals(3, this.dfa.trans(0, c));
-        c=new Character('.');
-        assertEquals(3, this.dfa.trans(3, c));
+    public void testTransForPunctuation() {
+        c = new Character(',');
+        assertEquals(5, this.dfa.trans(0, c));
+        c = new Character('!');
+        assertEquals(5, this.dfa.trans(0, c));
+        c = new Character('.');
+        assertEquals(5, this.dfa.trans(0, c));
+        c = new Character('.');
+        assertEquals(5, this.dfa.trans(5, c));
 
         //failurestate
-        c=new Character('.');
+        c = new Character('.');
         assertEquals(127, this.dfa.trans(1, c));
+    }
 
+    @Test
+    public void testWhiteSpaces() {
+        c = new Character(' ');
+        assertEquals(3, this.dfa.trans(0, c));
+        assertEquals(3, this.dfa.trans(3, c));
+    }
+    @Test
+    public void testasd(){
 
-        System.out.println(c.getType(','));
-        System.out.println(Character.OTHER_PUNCTUATION);
+        System.out.println(c.getType(' '));
+        System.out.println(Character.DIRECTIONALITY_WHITESPACE);
     }
 }

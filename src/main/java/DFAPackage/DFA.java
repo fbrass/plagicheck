@@ -58,16 +58,17 @@ public class DFA implements IDFA {
 
     @Override
     public int trans(int state, Object symbol) {
-        if(Character.getType((Character) symbol)==Character.OTHER_PUNCTUATION && ( state==0 || state==3)){
+        if(Character.getType((Character) symbol)==Character.OTHER_PUNCTUATION && ( state==0 || state==5)){
+            return 5;
+        }else if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC && (state==0 || state==1)){
+            return 1;
+        }else if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT && (state==0 || state==1)){
+            return 1;
+        }else if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_WHITESPACE && (state==0 || state==3)){
             return 3;
+        }else {
+            return 127;
         }
-        if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC && (state==0 || state==1)){
-            return 1;
-        }
-        if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT && (state==0 || state==1)){
-            return 1;
-        }
-        return 127;
     }
 
     @Override
