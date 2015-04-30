@@ -45,7 +45,7 @@ public class SimpleLexer implements ILexer {
             if (tk != null) {
                 if (tk.hasMoreTokens()) {
                     String intermediate = tk.nextToken();
-                    Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"--- nest token:"+intermediate);
+                    Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"--- nest token: "+intermediate);
                     //später: result
                     this.trie.insert(intermediate,action);
                     // trie. insert(intermediate, action);

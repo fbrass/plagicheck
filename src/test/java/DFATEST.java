@@ -38,46 +38,85 @@ public class DFATEST {
 
     @Test
     public void testTransForLetters(){
-        c= new Character('a');
+        c= 'a';
         assertEquals(1,this.dfa.trans(0, c));
-        c=new Character('a');
+        c= 'a';
         assertEquals(1,this.dfa.trans(1,c));
-        c=new Character('A');
+        c= 'A';
         assertEquals(1,this.dfa.trans(0,c));
-        c=new Character('A');
+        c= 'A';
         assertEquals(1, this.dfa.trans(1, c));
 
         //failurestate
-        c=new Character('A');
+        c= 'A';
         assertEquals(127, this.dfa.trans(3, c));
     }
 
     @Test
     public void testTransForPunctuation() {
-        c = new Character(',');
+        c = ',';
         assertEquals(5, this.dfa.trans(0, c));
-        c = new Character('!');
+        c = '!';
         assertEquals(5, this.dfa.trans(0, c));
-        c = new Character('.');
+        c = ';';
         assertEquals(5, this.dfa.trans(0, c));
-        c = new Character('.');
+        c = '?';
+        assertEquals(5, this.dfa.trans(0, c));
+        c = '.';
+        assertEquals(5, this.dfa.trans(0, c));
+        c = '.';
         assertEquals(5, this.dfa.trans(5, c));
 
         //failurestate
-        c = new Character('.');
+        c = '.';
         assertEquals(127, this.dfa.trans(1, c));
     }
 
     @Test
     public void testWhiteSpaces() {
-        c = new Character(' ');
+        c = ' ';
         assertEquals(3, this.dfa.trans(0, c));
         assertEquals(3, this.dfa.trans(3, c));
     }
     @Test
-    public void testasd(){
+    public void testStateSeven(){
+        c= '8';
+        assertEquals(7,this.dfa.trans(15,c));
+        assertEquals(7,this.dfa.trans(7,c));
+    }
+    @Test
+    public void testNumbers(){
+        c= '1';
+        assertEquals(14,this.dfa.trans(0,c));
+        assertEquals(15,this.dfa.trans(14,c));
+        Character d= '.';
+        assertEquals(16,this.dfa.trans(15,d));
+        assertEquals(17,this.dfa.trans(16,c));
+        assertEquals(18,this.dfa.trans(17,c));
+        assertEquals(19,this.dfa.trans(18,d));
+        assertEquals(20,this.dfa.trans(19,c));
+        assertEquals(22,this.dfa.trans(20,c));
 
-        System.out.println(c.getType(' '));
-        System.out.println(Character.DIRECTIONALITY_WHITESPACE);
+        assertEquals(127,this.dfa.trans(18,c));
+        assertEquals(127,this.dfa.trans(16,d));
+        assertEquals(127,this.dfa.trans(17,d));
+        assertEquals(127,this.dfa.trans(19,d));
+        assertEquals(127,this.dfa.trans(20,d));
+
+        c= 'a';
+        assertEquals(127,this.dfa.trans(14,c));
+        assertEquals(127,this.dfa.trans(15,c));
+        assertEquals(127,this.dfa.trans(16,c));
+        assertEquals(127,this.dfa.trans(17,c));
+        assertEquals(127,this.dfa.trans(18,c));
+        assertEquals(127,this.dfa.trans(19,c));
+        assertEquals(127,this.dfa.trans(20,c));
+        assertEquals(127,this.dfa.trans(22,c));
+    }
+
+    @Test
+    public void testCharacterStuff(){
+        //System.out.println(c.getType('a'));
+        //System.out.println(Character.DECIMAL_DIGIT_NUMBER);
     }
 }

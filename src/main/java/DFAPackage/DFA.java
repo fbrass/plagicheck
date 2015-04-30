@@ -1,12 +1,9 @@
 package DFAPackage;
 
-import actionsPackage.*;
-import mapPackage.IMapFactory;
-import triePackage.Trie;
-
 import java.util.Set;
 
 /**
+ * DFA is an implementation of a determed finishing automation
  * Created by Felix on 17.04.2015.
  */
 public class DFA implements IDFA {
@@ -30,7 +27,7 @@ public class DFA implements IDFA {
     127 FAILURE_STATE
      */
 
-    public DFA(){
+    public DFA() {
 
     }
 
@@ -43,30 +40,57 @@ public class DFA implements IDFA {
 
     @Override
     public boolean isFinal(int state) {
-        switch (state){
-            case -1 : return true;
-            case 1: return true;
-            case 3: return true;
-            case 5: return true;
-            case 7: return true;
-            case 14:return true;
-            case 15:return true;
-            case 22:return true;
+        switch (state) {
+            case -1:
+                return true;
+            case 1:
+                return true;
+            case 3:
+                return true;
+            case 5:
+                return true;
+            case 7:
+                return true;
+            case 14:
+                return true;
+            case 15:
+                return true;
+            case 22:
+                return true;
         }
         return false;
     }
 
     @Override
     public int trans(int state, Object symbol) {
-        if(Character.getType((Character) symbol)==Character.OTHER_PUNCTUATION && ( state==0 || state==5)){
-            return 5;
-        }else if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC && (state==0 || state==1)){
+        // EOF state implementieren
+        if (Character.getType((Character) symbol) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC && (state == 0 || state == 1)) {
             return 1;
-        }else if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT && (state==0 || state==1)){
+        } else if (Character.getType((Character) symbol) == Character.DIRECTIONALITY_RIGHT_TO_LEFT && (state == 0 || state == 1)) {
             return 1;
-        }else if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_WHITESPACE && (state==0 || state==3)){
+        } else if (Character.getType((Character) symbol) == Character.DIRECTIONALITY_WHITESPACE && (state == 0 || state == 3)) {
             return 3;
-        }else {
+        } else if (Character.getType((Character) symbol) == Character.OTHER_PUNCTUATION && (state == 0 || state == 5)) {
+            return 5;
+        } else if (Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER && (state == 15 || state == 7)) {
+            return 7;
+        } else if (Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER && (state == 0)) {
+            return 14;
+        } else if (Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER && (state == 14)) {
+            return 15;
+        } else if (state == 15 && symbol.equals('.')) {
+            return 16;
+        } else if (state == 16 && Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER) {
+            return 17;
+        } else if (state == 17 && Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER) {
+            return 18;
+        } else if (state == 18 && symbol.equals('.')) {
+            return 19;
+        } else if (state == 19 && Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER) {
+            return 20;
+        } else if (state == 20 && Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER) {
+            return 22;
+        } else {
             return 127;
         }
     }
