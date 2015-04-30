@@ -8,7 +8,6 @@ import mapPackage.TreeMapFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import triePackage.ITrie;
 import triePackage.ITrieReference;
 import triePackage.Trie;
 

@@ -10,19 +10,28 @@ import java.util.Set;
  * Created by Felix on 17.04.2015.
  */
 public class DFA implements IDFA {
-    private Trie IDENTIFIER;
-    private Trie WS;
-    private Trie DATE;
-    private Trie PMARK;
-    private Trie INTCONS;
 
 
-    public DFA(IMapFactory mapFactory){
-        this.IDENTIFIER = new Trie(mapFactory);
-        this.WS = new Trie(mapFactory);
-        this.DATE = new Trie(mapFactory);
-        this.PMARK = new Trie(mapFactory);
-        this.INTCONS = new Trie(mapFactory);
+    /*
+    -1 EOF_STATE
+    0 START_STATE
+    1 ID_STATE (WÖRTER)
+    3 WS_STATE (Leerzeichen)
+    5 PM_STATE (Punkte und shit)
+    7 INTCONS_STATE (zahlen udn shit)
+    14 1_OF_DAY_STATE
+    15 2_OF_DAY_STATE
+    16 DAY_STATE
+    17 1_OF_MONTH_STATE
+    18 2_OF_MONTH_STATE
+    19 MONTh_STATE
+    20 1_YEAR_OF_STATE
+    22 DATE_STATE
+    127 FAILURE_STATE
+     */
+
+    public DFA(){
+
     }
 
 
@@ -34,12 +43,31 @@ public class DFA implements IDFA {
 
     @Override
     public boolean isFinal(int state) {
+        switch (state){
+            case -1 : return true;
+            case 1: return true;
+            case 3: return true;
+            case 5: return true;
+            case 7: return true;
+            case 14:return true;
+            case 15:return true;
+            case 22:return true;
+        }
         return false;
     }
 
     @Override
     public int trans(int state, Object symbol) {
-        return 0;
+        if(Character.getType((Character) symbol)==Character.OTHER_PUNCTUATION && ( state==0 || state==3)){
+            return 3;
+        }
+        if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC && (state==0 || state==1)){
+            return 1;
+        }
+        if(Character.getType((Character) symbol)==Character.DIRECTIONALITY_RIGHT_TO_LEFT && (state==0 || state==1)){
+            return 1;
+        }
+        return 127;
     }
 
     @Override
