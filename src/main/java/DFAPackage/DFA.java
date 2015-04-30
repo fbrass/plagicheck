@@ -34,7 +34,6 @@ public class DFA implements IDFA {
 
     @Override
     public int getInitial() {
-        //TODO: muss unterschieden werde wegen Datumseingabe
         return 0;
     }
 
@@ -102,11 +101,28 @@ public class DFA implements IDFA {
 
     @Override
     public boolean isStop(int state) {
-        return false;
+        return state == -1 || state == 127;
     }
 
     @Override
-    public String stateToString(int state) {
-        return null;
+    public String stateToString(int state) throws Exception {
+        switch (state){
+            case -1:return "EOF_STATE";
+            case 0:return "START_STATE";
+            case 1:return "ID_STATE";
+            case 3:return "WS_STATE";
+            case 5:return "PM_STATE";
+            case 7:return "INTCONS_STATE";
+            case 14:return "1_OF_DAY_STATE";
+            case 15:return "2_OF_DAY_STATE";
+            case 16:return "DAY_STATE";
+            case 17:return "1_OF_MONTH_STATE";
+            case 18:return "2_OF_MONTH_STATE";
+            case 19:return "MONTH_STATE";
+            case 20:return "1_YEAR_OF_STATE";
+            case 22:return "DATE_STATE";
+            case 127:return "FAILURE_STATE";
+        }
+        throw new Exception("STATE does not exist");
     }
 }

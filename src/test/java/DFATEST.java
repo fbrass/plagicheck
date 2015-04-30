@@ -9,6 +9,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
+ * TestClass for DFA
  * Created by Felix on 30.04.2015.
  */
 public class DFATEST {
@@ -73,19 +74,19 @@ public class DFATEST {
     }
 
     @Test
-    public void testWhiteSpaces() {
+    public void testTransWhiteSpaces() {
         c = ' ';
         assertEquals(3, this.dfa.trans(0, c));
         assertEquals(3, this.dfa.trans(3, c));
     }
     @Test
-    public void testStateSeven(){
+    public void testTransStateSeven(){
         c= '8';
         assertEquals(7,this.dfa.trans(15,c));
         assertEquals(7,this.dfa.trans(7,c));
     }
     @Test
-    public void testNumbers(){
+    public void testTransNumbers(){
         c= '1';
         assertEquals(14,this.dfa.trans(0,c));
         assertEquals(15,this.dfa.trans(14,c));

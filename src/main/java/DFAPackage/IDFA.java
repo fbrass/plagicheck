@@ -5,6 +5,7 @@ import org.omg.CORBA.OBJECT_NOT_EXIST;
 import java.util.Set;
 
 /**
+ * Interface of all Automats
  * Created by Felix on 17.04.2015.
  */
 public interface IDFA {
@@ -14,5 +15,5 @@ public interface IDFA {
     //Set because it is extensible
     Set<Object> getTokenClasses(int s);
     boolean isStop(int state);
-    String stateToString(int state);
+    String stateToString(int state) throws Exception;
 }
