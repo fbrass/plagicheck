@@ -11,6 +11,7 @@ import triePackage.Trie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -73,6 +74,11 @@ public class SimpleLexer implements ILexer {
 
     public String decode(IToken tk) throws UnsupportedOperationException{
         throw new UnsupportedOperationException("nochnichtimplementiert");
+    }
+
+    @Override
+    public Map getDecodeMap() {
+        return null;
     }
 
     public String toString(){

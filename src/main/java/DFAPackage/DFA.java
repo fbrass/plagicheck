@@ -27,6 +27,22 @@ public class DFA implements IDFA {
     127 FAILURE_STATE
      */
 
+    public static int EOF_STATE            = -1;
+    public static int START_STATE          = 0;
+    public static int ID_STATE             = 1;    //WÖRTER
+    public static int WS_STATE             = 3;    //Leerzeichen
+    public static int PM_STATE             = 5;    //Punkte und shit
+    public static int INTCONS_STATE        = 7;    //zahlen udn shit
+    public static int FIRST_OF_DAY_STATE   = 14;
+    public static int SECOND_OF_DAY_STATE  = 15;
+    public static int DAY_STATE            = 16;
+    public static int FIRST_OF_MONTH_STATE = 17;
+    public static int SECOND_OF_MONTH_STATE= 18;
+    public static int MONTh_STATE          = 19;
+    public static int FIRST_YEAR_OF_STATE  = 20;
+    public static int DATE_STATE           = 22;
+    public static int FAILURE_STATE        = 127;
+
     public DFA() {
 
     }

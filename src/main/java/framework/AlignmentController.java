@@ -1,5 +1,6 @@
 package framework;
 
+import lexerPackage.BaseLexer;
 import lexerPackage.ILexer;
 import tokenPackage.IToken;
 import lexerPackage.SimpleLexer;
@@ -28,7 +29,7 @@ public class AlignmentController{
         // hier zweites File
 
 
-        ILexer lexer = new SimpleLexer(inputOrginal);
+        ILexer lexer = new BaseLexer(inputOrginal);
         IToken token = lexer.getNextToken();
         while(token != null){
             Logger.getLogger(AlignmentController.class.getName()).log(Level.INFO, " Gelesen: "+token);
