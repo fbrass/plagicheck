@@ -2,30 +2,7 @@ package DFAPackage;
 
 import java.util.Set;
 
-/**
- * DFA is an implementation of a determed finishing automation
- * Created by Felix on 17.04.2015.
- */
-public class DFA implements IDFA {
-
-
-    /*
-    -1 EOF_STATE
-    0 START_STATE
-    1 ID_STATE (WÖRTER)
-    3 WS_STATE (Leerzeichen)
-    5 PM_STATE (Punkte und shit)
-    7 INTCONS_STATE (zahlen udn shit)
-    14 1_OF_DAY_STATE
-    15 2_OF_DAY_STATE
-    16 DAY_STATE
-    17 1_OF_MONTH_STATE
-    18 2_OF_MONTH_STATE
-    19 MONTh_STATE
-    20 1_YEAR_OF_STATE
-    22 DATE_STATE
-    127 FAILURE_STATE
-     */
+public class DFA  {
 
     public static int EOF_STATE            = -1;
     public static int START_STATE          = 0;
@@ -38,23 +15,16 @@ public class DFA implements IDFA {
     public static int DAY_STATE            = 16;
     public static int FIRST_OF_MONTH_STATE = 17;
     public static int SECOND_OF_MONTH_STATE= 18;
-    public static int MONTh_STATE          = 19;
-    public static int FIRST_YEAR_OF_STATE  = 20;
+    public static int MONTH_STATE          = 19;
+    public static int FIRST_OF_YEAR_STATE  = 20;
     public static int DATE_STATE           = 22;
     public static int FAILURE_STATE        = 127;
 
-    public DFA() {
-
-    }
-
-
-    @Override
-    public int getInitial() {
+    public static int getInitial() {
         return 0;
     }
 
-    @Override
-    public boolean isFinal(int state) {
+    public static boolean isFinal(int state) {
         switch (state) {
             case -1:
                 return true;
@@ -76,8 +46,7 @@ public class DFA implements IDFA {
         return false;
     }
 
-    @Override
-    public int trans(int state, Object symbol) {
+    public static int trans(int state, Object symbol) {
         // EOF state implementieren
         if (Character.getType((Character) symbol) == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC && (state == 0 || state == 1)) {
             return 1;
@@ -110,18 +79,15 @@ public class DFA implements IDFA {
         }
     }
 
-    @Override
-    public Set<Object> getTokenClasses(int s) {
+    public static Set<Object> getTokenClasses(int s) {
         return null;
     }
 
-    @Override
-    public boolean isStop(int state) {
+    public static boolean isStop(int state) {
         return state == -1 || state == 127;
     }
 
-    @Override
-    public String stateToString(int state) throws Exception {
+    public static String stateToString(int state) throws Exception {
         switch (state){
             case -1:return "EOF_STATE";
             case 0:return "START_STATE";

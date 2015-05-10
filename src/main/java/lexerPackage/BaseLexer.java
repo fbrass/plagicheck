@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PushbackReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,11 +39,11 @@ public class BaseLexer implements ILexer{
     private IActionAtInsert pmarkAction = new StringCoding(1);
     private IActionAtInsert dateAction = new StringCoding(1);
 
-    private Map<IToken, String> decodeMap = new HashMap<>();
+    private Map<IToken, String> decodeMap = new TreeMap<>();
 
 
     public BaseLexer(BufferedReader reader){
-        pushbackReader = new PushbackReader(reader);
+        pushbackReader = new PushbackReader(reader, 8);
         this.mapFactory=new TreeMapFactory();
         this.identifierTrie= new Trie(mapFactory);
         this.intconsTrie=new Trie(mapFactory);
@@ -52,66 +53,74 @@ public class BaseLexer implements ILexer{
     }
 
 
-
     @Override
     public IToken getNextToken() throws IOException {
         Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO, "--> next token");
         IToken result = null;
-        DFA dfa = new DFA();
-        int state = dfa.getInitial();
-
+        int state = DFA.getInitial();
         String insertString = "";
+        int lastState;
 
-        int lastState=-100;
 
-        do //invariante: es gibt einen Tokenizer; tk != null;
-        {
 
+        do {
             int read = pushbackReader.read();
             if (read != -1) {
-
                 char prChar = (char)(read);
                 lastState = state;
-                state = dfa.trans(state, prChar);
+                state = DFA.trans(state, prChar);
 
+                if (state == DFA.FAILURE_STATE){
+                    if (lastState > DFA.SECOND_OF_DAY_STATE
+                            && lastState < DFA.DATE_STATE){
 
-
-                if (state == dfa.FAILURE_STATE){
-                    pushbackReader.unread(read);
+                        state=DFA.INTCONS_STATE;
+                        handleWrongDate(read, insertString);
+                        insertString="";
+                    } else {
+                        pushbackReader.unread(read);
+                    }
                 } else {
                     insertString = insertString + prChar;
                 }
 
             } else {
                 lastState = state;
-                state = dfa.EOF_STATE;
+
+                if (lastState > DFA.SECOND_OF_DAY_STATE
+                        && lastState < DFA.DATE_STATE) {
+                    state=DFA.INTCONS_STATE;
+                    handleWrongDate(read, insertString);
+                    insertString="";
+                } else {
+                    state = DFA.EOF_STATE;
+                }
             }
         }
-        while (!dfa.isStop(state));
+        while (!DFA.isStop(state));
 
         try{
-            Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"--- nest token: '"+insertString+"' " + dfa.stateToString(lastState));
+            Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"--- nest token: '"+insertString+"' " + DFA.stateToString(lastState));
         } catch (Exception e){
-            System.out.println(e);
+            Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO, e.toString());
         }
 
         int classCode = -1;
         int relativeCode = -1;
 
-
-        if(lastState == dfa.ID_STATE){
+        if(lastState == DFA.ID_STATE){
             classCode = IToken.IDENTIFIER;
             relativeCode = (Integer) identifierTrie.insert(insertString, identifierAction).getValue();
-        } else if (lastState == dfa.INTCONS_STATE || lastState == dfa.FIRST_OF_DAY_STATE || lastState == dfa.SECOND_OF_DAY_STATE ){
+        } else if (lastState == DFA.INTCONS_STATE || lastState == DFA.FIRST_OF_DAY_STATE || lastState == DFA.SECOND_OF_DAY_STATE ){
             classCode = IToken.INTCONS;
             relativeCode = (Integer) intconsTrie.insert(insertString, intconsAction).getValue();
-        } else if (lastState == dfa.DATE_STATE){
+        } else if (lastState == DFA.DATE_STATE){
             classCode = IToken.DATE;
             relativeCode = (Integer) dateTrie.insert(insertString, dateAction).getValue();
-        } else if (lastState == dfa.WS_STATE){
+        } else if (lastState == DFA.WS_STATE){
             classCode = IToken.WS;
             relativeCode = (Integer) wsTrie.insert(insertString, wsAction).getValue();
-        } else if (lastState == dfa.PM_STATE){
+        } else if (lastState == DFA.PM_STATE){
             classCode = IToken.PMARK;
             relativeCode = (Integer) pmarkTrie.insert(insertString, pmarkAction).getValue();
         }
@@ -123,8 +132,6 @@ public class BaseLexer implements ILexer{
 
         Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"<-- result token: "+result);
 
-
-
         return result;
     }
 
@@ -132,7 +139,8 @@ public class BaseLexer implements ILexer{
     public String decode(IToken tk) throws Exception {
         String result = "";
         for(IToken key : decodeMap.keySet()){
-            if (key.compareTo(tk) == 0){
+            Token keyT = (Token) key;
+            if (keyT.compareTo(tk) == 0){
                 result = decodeMap.get(key);
             }
         }
@@ -140,6 +148,18 @@ public class BaseLexer implements ILexer{
             throw new Exception("keinen String zu Schlüssel gefunden");
         }
         return result;
+    }
+
+    private void handleWrongDate(int read, String insertString) throws IOException {
+
+
+        char[] insertCharset = new char[insertString.length()];
+        for(int i = 0; i<insertString.length(); i++){
+            insertCharset[i] = insertString.charAt(i);
+        }
+
+        pushbackReader.unread(read);
+        pushbackReader.unread(insertCharset);
     }
 
     public Map getDecodeMap(){
