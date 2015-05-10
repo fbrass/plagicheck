@@ -12,5 +12,4 @@ public interface IToken {
 
     int getClassCode();
     int getRelativeCode();
-    int compareTo(IToken iToken);
 }
