@@ -52,7 +52,7 @@ public class Trie implements ITrie {
         String t = s;
         if(it.hasNext()){
             TrieNode tn= (TrieNode) it.next();
-            System.out.print(s + tn.getIngoingPartialKey());
+            System.out.print( s + "'" + tn.getIngoingPartialKey() + "'");
             if(tn.getValue()!=0){
                 System.out.print("                  |->"+tn.getValue());
 
