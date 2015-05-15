@@ -28,6 +28,7 @@ public class BaseLexer implements ILexer{
     private IMapFactory mapFactory;
     private BufferedReader reader;
     private PushbackReader pushbackReader;
+
     private ITrie identifierTrie;
     private ITrie intconsTrie;
     private ITrie wsTrie;
@@ -165,4 +166,26 @@ public class BaseLexer implements ILexer{
     public Map getDecodeMap(){
         return decodeMap;
     }
+    public ITrie getIdentifierTrie() {
+        return identifierTrie;
+    }
+
+    public ITrie getIntconsTrie() {
+        return intconsTrie;
+    }
+
+    public ITrie getWsTrie() {
+        return wsTrie;
+    }
+
+    public ITrie getPmarkTrie() {
+        return pmarkTrie;
+    }
+
+    public ITrie getDateTrie() {
+        return dateTrie;
+    }
+
+
+
 }
