@@ -43,15 +43,16 @@ public class AlignmentController{
         ILexer lexer = new FilterLexer(new BufferedReader(pushbackReaderOrginal));
         ITokenSequence s1 = new TokenSequence();
         IToken tk1=lexer.getNextToken();
-        s1.add(tk1);
 
         while ( tk1.getClassCode()!=IToken.EOF || tk1.getClassCode()!=IToken.ERROR){
+
             s1.add(tk1);
         }
 
         lexer.setPushbackReader(pushbackReaderSuspect);
         ITokenSequence s2 =new TokenSequence();
         IToken tk2 = lexer.getNextToken();
+
         while ( tk2.getClassCode()!=IToken.EOF || tk2.getClassCode()!=IToken.ERROR){
             s2.add(tk2);
         }
@@ -70,7 +71,7 @@ public class AlignmentController{
 
 
         IToken token = lexer.getNextToken();
-        while(token != null){
+        /*while(token != null){
             Logger.getLogger(AlignmentController.class.getName()).log(Level.INFO, " Gelesen: "+token);
             token = lexer.getNextToken();
         }
