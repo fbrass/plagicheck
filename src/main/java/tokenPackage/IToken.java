@@ -1,15 +1,19 @@
 package tokenPackage;
 
 /**
+ *
  * Created by Felix on 27.03.2015.
  */
 public interface IToken {
-    final static int IDENTIFIER=1;
-    final static int INTCONS=2;
-    final static int DATE=3;
-    final static int PMARK=4;
-    final static int WS = 5;
+    int IDENTIFIER = 1;
+    int INTCONS = 2;
+    int DATE = 3;
+    int PMARK = 4;
+    int WS = 5;
+    int EOF = -1;
+    int ERROR = 6;
 
     int getClassCode();
+
     int getRelativeCode();
 }

@@ -57,14 +57,14 @@ public class BaseLexer implements ILexer{
     @Override
     public IToken getNextToken() throws IOException {
         Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO, "--> next token");
-        IToken result = null;
+        IToken result;
         int state = DFA.getInitial();
         String insertString = "";
         int lastState;
 
 
 
-        do {
+        do{
             int read = pushbackReader.read();
             if (read != -1) {
                 char prChar = (char)(read);
@@ -115,19 +115,22 @@ public class BaseLexer implements ILexer{
         } else if (lastState == DFA.INTCONS_STATE || lastState == DFA.FIRST_OF_DAY_STATE || lastState == DFA.SECOND_OF_DAY_STATE ){
             classCode = IToken.INTCONS;
             relativeCode = (Integer) intconsTrie.insert(insertString, intconsAction).getValue();
-        } else if (lastState == DFA.DATE_STATE){
-            classCode = IToken.DATE;
-            relativeCode = (Integer) dateTrie.insert(insertString, dateAction).getValue();
         } else if (lastState == DFA.WS_STATE){
             classCode = IToken.WS;
             relativeCode = (Integer) wsTrie.insert(insertString, wsAction).getValue();
         } else if (lastState == DFA.PM_STATE){
             classCode = IToken.PMARK;
             relativeCode = (Integer) pmarkTrie.insert(insertString, pmarkAction).getValue();
+        }else if (lastState == DFA.DATE_STATE){
+            classCode = IToken.DATE;
+            relativeCode = (Integer) dateTrie.insert(insertString, dateAction).getValue();
+        } else if(state == DFA.EOF_STATE){
+            classCode = IToken.EOF;
+
         }
 
-        if (relativeCode != -1){
-            result = new Token(classCode, relativeCode);
+        result=new Token(classCode, relativeCode);
+        if (relativeCode != -1 ){
             this.decodeMap.put(result, insertString);
         }
 
@@ -166,6 +169,12 @@ public class BaseLexer implements ILexer{
     public Map getDecodeMap(){
         return decodeMap;
     }
+
+    @Override
+    public void setPushbackReader(PushbackReader b) {
+        this.reader= new BufferedReader(b);
+    }
+
     public ITrie getIdentifierTrie() {
         return identifierTrie;
     }

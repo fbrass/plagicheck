@@ -11,17 +11,19 @@ import triePackage.Trie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PushbackReader;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ *
  * Created by Felix on 27.03.2015.
  */
 public class SimpleLexer implements ILexer {
 
-    final private BufferedReader reader;
+    private BufferedReader reader;
     final private IMapFactory mapFactory = new TreeMapFactory();
     final private IActionAtInsert action = new StringCoding(4711);
     final private ITrie trie;
@@ -79,6 +81,11 @@ public class SimpleLexer implements ILexer {
     @Override
     public Map getDecodeMap() {
         return null;
+    }
+
+    @Override
+    public void setPushbackReader(PushbackReader b) {
+        this.reader=new BufferedReader(b);
     }
 
     public String toString(){

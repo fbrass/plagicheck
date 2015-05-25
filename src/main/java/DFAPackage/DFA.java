@@ -18,6 +18,7 @@ public class DFA  {
     public static int MONTH_STATE          = 19;
     public static int FIRST_OF_YEAR_STATE  = 20;
     public static int DATE_STATE           = 22;
+    public static int DEFAULT_STATE        = 50;
     public static int FAILURE_STATE        = 127;
 
     public static int getInitial() {
@@ -41,6 +42,8 @@ public class DFA  {
             case 15:
                 return true;
             case 22:
+                return true;
+            case 50:
                 return true;
         }
         return false;
@@ -74,6 +77,12 @@ public class DFA  {
             return 20;
         } else if (state == 20 && Character.getType((Character) symbol) == Character.DECIMAL_DIGIT_NUMBER) {
             return 22;
+        } else if ( state == 50 && ( Character.getType((Character) symbol)== Character.OTHER_PUNCTUATION  || Character.getType((Character) symbol)==Character.DIRECTIONALITY_WHITESPACE)){
+            return 127;
+        } else if ( state == 50) {
+            return 50;
+        } else if( state==0){
+            return 50;
         } else {
             return 127;
         }
@@ -103,6 +112,7 @@ public class DFA  {
             case 19:return "MONTH_STATE";
             case 20:return "1_YEAR_OF_STATE";
             case 22:return "DATE_STATE";
+            case 50:return "DEFAULT_STATE";
             case 127:return "FAILURE_STATE";
         }
         throw new Exception("STATE does not exist");

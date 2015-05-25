@@ -36,7 +36,7 @@ public class DFATEST {
     @Test
     public void testTransForLetters(){
         c= 'a';
-        assertEquals(1,DFA.trans(0, c));
+        assertEquals(1, DFA.trans(0, c));
         c= 'a';
         assertEquals(1,DFA.trans(1,c));
         c= 'A';
@@ -112,8 +112,10 @@ public class DFATEST {
     }
 
     @Test
-    public void testCharacterStuff(){
+    public void testPunctattion(){
         //System.out.println(c.getType('a'));
-        //System.out.println(Character.DECIMAL_DIGIT_NUMBER);
+        //System.out.println(Character.DIRECTIONALITY_RIGHT_TO_LEFT);
     }
+
+
 }
