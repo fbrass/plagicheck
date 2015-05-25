@@ -43,7 +43,6 @@ public class AlignmentController{
         ILexer lexer = new FilterLexer(new BufferedReader(pushbackReaderOrginal));
         ITokenSequence s1 = new TokenSequence();
         IToken tk1=lexer.getNextToken();
-        System.out.println(tk1);
         s1.add(tk1);
 
         while ( tk1.getClassCode()!=IToken.EOF || tk1.getClassCode()!=IToken.ERROR){

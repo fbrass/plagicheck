@@ -10,11 +10,10 @@ import java.util.Iterator;
  * Created by said on 25.05.2015.
  */
 public class TokenSequence implements ITokenSequence {
-    private ArrayList<IToken> tokenArrayList;
+    private ArrayList<IToken> tokenArrayList= new ArrayList<>();
 
     @Override
-    public void add(IToken tk) {
-        System.out.println("tokensequen print out " +tk);
+    public void add(IToken tk) {;
         this.tokenArrayList.add(tk);
     }
 
