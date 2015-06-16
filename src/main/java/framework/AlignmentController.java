@@ -32,7 +32,7 @@ public class AlignmentController{
         this.suspect=suspect;
     }
 
-    public void run() throws IOException{
+    public void run() throws Exception{
         PushbackReader pushbackReaderOrginal = new PushbackReader(new FileReader(orginal));
 
         // hier zweites File
@@ -75,7 +75,7 @@ public class AlignmentController{
             Logger.getLogger(AlignmentController.class.getName()).log(Level.INFO, " Gelesen: "+token);
             token = lexer.getNextToken();
         }
-        /* später: hier Lexer an zweiten Input binden; Leseschleife */
+        /* spï¿½ter: hier Lexer an zweiten Input binden; Leseschleife */
 
 
 

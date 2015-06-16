@@ -34,11 +34,13 @@ public class BaseLexer implements ILexer{
     private ITrie wsTrie;
     private ITrie pmarkTrie;
     private ITrie dateTrie;
+    private ITrie defaultTrie;
     private IActionAtInsert identifierAction = new StringCoding(1);
     private IActionAtInsert intconsAction = new StringCoding(1);
     private IActionAtInsert wsAction      = new StringCoding(1);
     private IActionAtInsert pmarkAction = new StringCoding(1);
     private IActionAtInsert dateAction = new StringCoding(1);
+    private IActionAtInsert defaultAction = new StringCoding(1);
 
     private Map<IToken, String> decodeMap = new TreeMap<>();
 
@@ -51,13 +53,14 @@ public class BaseLexer implements ILexer{
         this.wsTrie=new Trie(mapFactory);
         this.pmarkTrie=new Trie(mapFactory);
         this.dateTrie=new Trie(mapFactory);
+        this.defaultTrie = new Trie(mapFactory);
     }
 
 
     @Override
     public IToken getNextToken() throws IOException {
         Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO, "--> next token");
-        IToken result;
+        IToken result = null;
         int state = DFA.getInitial();
         String insertString = "";
         int lastState;
@@ -124,13 +127,17 @@ public class BaseLexer implements ILexer{
         }else if (lastState == DFA.DATE_STATE){
             classCode = IToken.DATE;
             relativeCode = (Integer) dateTrie.insert(insertString, dateAction).getValue();
-        } else if(state == DFA.EOF_STATE){
+        } /*else if(state == DFA.EOF_STATE){
             classCode = IToken.EOF;
-
+        }*/
+        else if (lastState == DFA.DEFAULT_STATE) {
+            classCode = IToken.DEFAULT;
+            relativeCode = (Integer) defaultTrie.insert(insertString, defaultAction).getValue();
         }
 
-        result=new Token(classCode, relativeCode);
         if (relativeCode != -1 ){
+            result=new Token(classCode, relativeCode);
+
             this.decodeMap.put(result, insertString);
         }
 
@@ -149,7 +156,7 @@ public class BaseLexer implements ILexer{
             }
         }
         if (result.equals("")){
-            throw new Exception("keinen String zu Schlüssel gefunden");
+            throw new Exception("keinen String zu SchlÃ¼ssel gefunden");
         }
         return result;
     }
@@ -195,6 +202,9 @@ public class BaseLexer implements ILexer{
         return dateTrie;
     }
 
+    public ITrie getDefaultTrie() {
+        return defaultTrie;
+    }
 
 
 }

@@ -78,6 +78,8 @@ public class BaseLexerTest {
             System.out.println("Whitespaces:");
             bLexer.getWsTrie().toString();
 
+            System.out.println("Default:");
+            bLexer.getDefaultTrie();
 
         } catch(Exception e){
             System.out.println(e);
