@@ -1,8 +1,7 @@
 package alignerPackage;
 
-/**
- *
- * Created by said on 25.05.2015.
- */
 public interface IAlignmentMatrix {
+
+    void set(int i, int j, IAlignmentContent ac);
+    IAlignmentContent get(int i, int j);
 }

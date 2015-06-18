@@ -2,34 +2,42 @@ package scorePackage;
 
 import tokenPackage.IToken;
 
-/**
- *
- * Created by said on 25.05.2015.
- */
 public class SimpleScoring implements IScoring {
 
+    private double gapScore=0.5;
     @Override
     public double getScore(IToken tk1, IToken tk2) {
-        return (tk1.getClass()==tk2.getClass() && tk1.getRelativeCode()==tk2.getRelativeCode() ? 1.0:0);
-    }
+        double score=0;
 
+        if(tk1.getClassCode()==tk2.getClassCode() && tk1.getRelativeCode()==tk2.getRelativeCode()){
+            score= 1.0;
+        }else{
+            score= 0.0;
+        }
+        //System.out.println("Scoring.getScore: "+ score);
+        return score;
+    }
 
     @Override
     public double getGapScore() {
-        return 1;
+
+        return gapScore;
     }
 
-    boolean isPerfect(double s){
-        return false;
+    @Override
+    public boolean isPerfect(double d) {
+
+        return ((1.0-d)<0.1);
     }
 
-    boolean isMismatch(double s){
-        return false;
+    @Override
+    public boolean isMismatch(double d) {
+        return ((1.0-d)>0.9);
     }
 
-    boolean isNearMatch(double s){
-        return false;
+    @Override
+    public boolean isNearMatch(double d) {
+
+        return (d>=0.4 && d<=1.0);
     }
-
-
 }

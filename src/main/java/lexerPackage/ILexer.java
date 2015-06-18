@@ -14,5 +14,6 @@ public interface ILexer {
     IToken getNextToken() throws IOException;
     String decode(IToken tk) throws Exception;
     Map getDecodeMap();
+    boolean isFinished();
     void setPushbackReader(PushbackReader b);
 }

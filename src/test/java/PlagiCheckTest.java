@@ -1,4 +1,4 @@
-import framework.PlagiCheck;
+import framework.Framework;
 import org.junit.Test;
 
 /**

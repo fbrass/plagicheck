@@ -41,4 +41,9 @@ public class FilterLexer implements ILexer {
     public void setPushbackReader(PushbackReader b) {
         this.baseLexer.setPushbackReader(b);
     }
+
+    @Override
+    public boolean isFinished(){
+        return this.baseLexer.isFinished();
+    }
 }

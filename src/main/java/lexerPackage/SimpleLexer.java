@@ -49,7 +49,7 @@ public class SimpleLexer implements ILexer {
                 if (tk.hasMoreTokens()) {
                     String intermediate = tk.nextToken();
                     Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"--- nest token: "+intermediate);
-                    //später: result
+                    //spï¿½ter: result
                     this.trie.insert(intermediate,action);
                     // trie. insert(intermediate, action);
                     // DIC
@@ -91,4 +91,7 @@ public class SimpleLexer implements ILexer {
     public String toString(){
         return "\nResult Trie \n"+trie;
     }
+
+    @Override
+    public boolean isFinished(){return false;}
 }

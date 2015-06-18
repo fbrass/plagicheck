@@ -29,6 +29,8 @@ public class BaseLexer implements ILexer{
     private BufferedReader reader;
     private PushbackReader pushbackReader;
 
+    private boolean isFinished = false;
+
     private ITrie identifierTrie;
     private ITrie intconsTrie;
     private ITrie wsTrie;
@@ -139,6 +141,8 @@ public class BaseLexer implements ILexer{
             result=new Token(classCode, relativeCode);
 
             this.decodeMap.put(result, insertString);
+        } else {
+            isFinished = true;
         }
 
         Logger.getLogger(SimpleLexer.class.getName()).log(Level.INFO,"<-- result token: "+result);
@@ -205,6 +209,9 @@ public class BaseLexer implements ILexer{
     public ITrie getDefaultTrie() {
         return defaultTrie;
     }
+
+    @Override
+    public boolean isFinished() {return isFinished;}
 
 
 }
